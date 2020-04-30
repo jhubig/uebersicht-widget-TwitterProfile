@@ -20,7 +20,7 @@ A widget for Übersicht displaying a twitter profile picture with number of foll
 
 It displays the profile picture and number of followers of your chosen twitter account. This is possible without the Twitter API.
 
-**Becoma a part of it**   
+**Become a part of it**   
 Do you have any ideas to improve or extend the existing functionality? Feel free to raise an issue or create a pull request. Thanks.
 
 
