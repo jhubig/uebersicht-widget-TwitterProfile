@@ -6,7 +6,7 @@
 pos_top		= '540px'
 pos_left	= '650px'
 
-# THEME OPTIONS: bright, dark, striped or color	(default/blank is bright)
+# THEMES: bright, dark, striped or color	(default/blank is bright)
 theme		= 'bright'
 
 # Your twitter account you want to see
@@ -15,10 +15,9 @@ twitter_account = "felx"
 #-----------------------------------------------------------------------#
 
 if theme == 'dark'
-  labelColor	= 'WHITE'
   followerColor		= 'WHITE'
   profileNameColor	= 'WHITE'
-  bkground		= 'rgba(#000, 0.8)'
+  widgetBackground		= 'rgba(#000, 0.8)'
   opacityLevel	= '0.9'
   twttrIconSrc = "twitterProfile.widget/Twitter_Social_Icon_Circle_White.svg"
   twttrIconOpacityLevel = '0.4'
@@ -27,10 +26,9 @@ if theme == 'dark'
   backgroundSize = 'auto auto'
 
 else if theme == 'bright'
-  labelColor	= 'WHITE'
   followerColor		= 'BLACK'
   profileNameColor	= '#1DA1F2'
-  bkground		= 'rgba(#fff, 1)'
+  widgetBackground		= 'rgba(#fff, 1)'
   opacityLevel	= '0.9'
   twttrIconSrc = "twitterProfile.widget/Twitter_Social_Icon_Circle_Color.svg"
   twttrIconOpacityLevel = '0.8'
@@ -39,10 +37,9 @@ else if theme == 'bright'
   backgroundSize = 'auto auto'
 
 else if theme == 'color'
-  labelColor	= 'WHITE'
   followerColor		= 'WHITE'
   profileNameColor	= 'WHITE'
-  bkground		= 'rgba(#1DA1F2, 0.8)'
+  widgetBackground		= 'rgba(#1DA1F2, 0.8)'
   opacityLevel	= '0.9'
   twttrIconSrc = 'twitterProfile.widget/Twitter_Social_Icon_Circle_White.svg'
   twttrIconOpacityLevel = '0.8'
@@ -51,10 +48,9 @@ else if theme == 'color'
   backgroundSize = 'auto auto'
 
 else if theme == 'striped'
-  labelColor	= 'WHITE'
   followerColor		= 'BLACK'
   profileNameColor	= 'BLACK'
-  bkground		= 'rgba(#1DA1F2, 0.8)'
+  widgetBackground		= 'rgba(#1DA1F2, 0.8)'
   opacityLevel	= '0.9'
   twttrIconSrc = 'twitterProfile.widget/Twitter_Social_Icon_Circle_White.svg'
   twttrIconOpacityLevel = '1'
@@ -63,10 +59,9 @@ else if theme == 'striped'
   backgroundSize = '14.14px 14.14px'
 
 else
-  labelColor	= 'WHITE'
   followerColor		= 'BLACK'
   profileNameColor	= '#1DA1F2'
-  bkground		= 'rgba(#fff, 1)'
+  widgetBackground		= 'rgba(#fff, 1)'
   opacityLevel	= '0.8'
   twttrIconSrc = 'twitterProfile.widget/Twitter_Social_Icon_Circle_Color.svg'
   twttrIconOpacityLevel = '0.8'
@@ -74,7 +69,7 @@ else
   backgroundImage = 'none'
   backgroundSize = 'auto auto'
 
-command: "curl -H \"Content-Type: application/json\" \"https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names=#{twitter_account}\" 2>/dev/null"
+command: "curl -H \"Content-Type: application/json\" \"https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names=#{twitter_account}\" 2>/dev/null && echo && curl -s https://twitter.com/#{twitter_account} | grep \"ProfileAvatar-image\" | awk '{print $4}' | awk -F\"=\" '{print $2}' | sed 's/\"//g' 2>/dev/null"
 
 # Update every hour
 refreshFrequency: 3600000
@@ -88,8 +83,8 @@ style: """
   div
     display: block
     border-radius 15px
-    text-shadow: 0 0 1px #{bkground}
-    background: #{bkground}
+    text-shadow: 0 0 1px #{widgetBackground}
+    background: #{widgetBackground}
     font-size: 16px
     font-weight: 400
     opacity: #{opacityLevel}
@@ -153,3 +148,4 @@ update: (output,domEl) ->
 
   div.find('.profile_name').html(twitterUsername)
   div.find('.followers_count').html('Followers: ' + followersCount)
+  div.find('#profilePicture').attr("src",output.split("\n")[1])
