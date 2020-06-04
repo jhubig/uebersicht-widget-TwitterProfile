@@ -69,7 +69,7 @@ else
   backgroundImage = 'none'
   backgroundSize = 'auto auto'
 
-command: "curl -H \"Content-Type: application/json\" \"https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names=#{twitter_account}\" 2>/dev/null && echo && curl -s https://twitter.com/#{twitter_account} | grep \"ProfileAvatar-image\" | awk '{print $4}' | awk -F\"=\" '{print $2}' | sed 's/\"//g' 2>/dev/null"
+command: "curl -H \"Content-Type: application/json\" \"https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names=#{twitter_account}\" 2>/dev/null"
 
 # Update every hour
 refreshFrequency: 3600000
@@ -134,7 +134,7 @@ render: -> """
   <div>
     <span class='profile_name'></span>
     <p class='followers_count'></p>
-    <img id="profilePicture" src="https://avatars.io/twitter/#{twitter_account}" />
+    <img id="profilePicture" src="https://twitter-avatar.now.sh/#{twitter_account}" />
     <img id="twitter_icon" src="#{twttrIconSrc}" />
   </div>
 """
@@ -148,4 +148,3 @@ update: (output,domEl) ->
 
   div.find('.profile_name').html(twitterUsername)
   div.find('.followers_count').html('Followers: ' + followersCount)
-  div.find('#profilePicture').attr("src",output.split("\n")[1])
